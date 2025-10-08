@@ -40,4 +40,41 @@ If a resource is unavailable, SchedulIQ provides intelligent alternatives.
 ---
 
 ## 📂 Folder Structure
-
+SchedulIQ/
+│
+├── frontend/
+│ ├── public/
+│ ├── src/
+│ │ ├── api/
+│ │ │ └── axios.js
+│ │ ├── assets/
+│ │ ├── components/
+│ │ │ ├── Navbar.jsx
+│ │ │ ├── Footer.jsx
+│ │ │ └── BookingModal.jsx
+│ │ ├── pages/
+│ │ │ ├── Home.jsx
+│ │ │ ├── Resources.jsx
+│ │ │ ├── Schedule.jsx
+│ │ │ ├── Dashboard.jsx
+│ │ │ └── Login.jsx
+│ │ ├── App.jsx
+│ │ ├── main.jsx
+│ │ └── index.css
+│ ├── package.json
+│ └── vite.config.js
+│
+└── backend/
+├── models/
+│ ├── Resource.js
+│ ├── Booking.js
+│ └── User.js
+├── routes/
+│ ├── resourceRoutes.js
+│ ├── bookingRoutes.js
+│ └── userRoutes.js
+├── server.js
+├── config/
+│ └── db.js
+├── package.json
+└── .env
