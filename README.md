@@ -43,38 +43,39 @@ If a resource is unavailable, SchedulIQ provides intelligent alternatives.
 SchedulIQ/
 │
 ├── frontend/
-│ ├── public/
-│ ├── src/
-│ │ ├── api/
-│ │ │ └── axios.js
-│ │ ├── assets/
-│ │ ├── components/
-│ │ │ ├── Navbar.jsx
-│ │ │ ├── Footer.jsx
-│ │ │ └── BookingModal.jsx
-│ │ ├── pages/
-│ │ │ ├── Home.jsx
-│ │ │ ├── Resources.jsx
-│ │ │ ├── Schedule.jsx
-│ │ │ ├── Dashboard.jsx
-│ │ │ └── Login.jsx
-│ │ ├── App.jsx
-│ │ ├── main.jsx
-│ │ └── index.css
-│ ├── package.json
-│ └── vite.config.js
+│   ├── public/
+│   ├── src/
+│   │   ├── api/
+│   │   │   └── axios.js
+│   │   ├── assets/
+│   │   ├── components/
+│   │   │   ├── Navbar.jsx
+│   │   │   ├── Footer.jsx
+│   │   │   └── BookingModal.jsx
+│   │   ├── pages/
+│   │   │   ├── Home.jsx
+│   │   │   ├── Resources.jsx
+│   │   │   ├── Schedule.jsx
+│   │   │   ├── Dashboard.jsx
+│   │   │   └── Login.jsx
+│   │   ├── App.jsx
+│   │   ├── main.jsx
+│   │   └── index.css
+│   ├── package.json
+│   └── vite.config.js
 │
 └── backend/
-├── models/
-│ ├── Resource.js
-│ ├── Booking.js
-│ └── User.js
-├── routes/
-│ ├── resourceRoutes.js
-│ ├── bookingRoutes.js
-│ └── userRoutes.js
-├── server.js
-├── config/
-│ └── db.js
-├── package.json
-└── .env
+    ├── models/
+    │   ├── Resource.js
+    │   ├── Booking.js
+    │   └── User.js
+    ├── routes/
+    │   ├── resourceRoutes.js
+    │   ├── bookingRoutes.js
+    │   └── userRoutes.js
+    ├── config/
+    │   └── db.js
+    ├── server.js
+    ├── package.json
+    └── .env
+
