@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from "../api/axios";
+import { authAPI } from "../api/axios"; // Changed import
 import { useNavigate, Link } from "react-router-dom";
 import { motion } from 'framer-motion';
 
@@ -16,6 +16,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState({});
+  const [loginType, setLoginType] = useState("user"); // "user" or "admin"
   const navigate = useNavigate();
 
   const validateForm = () => {
@@ -36,14 +37,18 @@ export default function Login() {
     
     setIsLoading(true);
     try {
-      const res = await axios.post("/auth/login", { email, password });
+      // Use authAPI instead of direct axios
+      const res = await authAPI.login({ email, password });
+      
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.user));
       
-      // Success animation before navigation
-      setTimeout(() => {
+      // Check user role and redirect accordingly
+      if (res.data.user.role === 'admin') {
+        navigate("/admin/dashboard");
+      } else {
         navigate("/dashboard");
-      }, 1000);
+      }
       
     } catch (err) {
       setErrors({ submit: err.response?.data?.message || "Invalid credentials. Please try again." });
@@ -52,6 +57,7 @@ export default function Login() {
     }
   };
 
+  // ... rest of your component remains exactly the same
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -136,8 +142,36 @@ export default function Login() {
               Welcome Back
             </h1>
             <MText variants={itemVariants} className="text-gray-600 mt-2">
-              Sign in to your account
+              Sign in to your {loginType === "admin" ? "Admin" : "User"} account
             </MText>
+          </MContainer>
+
+          {/* Login Type Selector */}
+          <MContainer variants={itemVariants} className="mb-6">
+            <div className="flex bg-gray-100 rounded-xl p-1">
+              <button
+                type="button"
+                className={`flex-1 py-2 px-4 rounded-lg font-medium transition-all duration-300 ${
+                  loginType === "user" 
+                    ? "bg-white text-blue-600 shadow-sm" 
+                    : "text-gray-600 hover:text-gray-800"
+                }`}
+                onClick={() => setLoginType("user")}
+              >
+                User Login
+              </button>
+              <button
+                type="button"
+                className={`flex-1 py-2 px-4 rounded-lg font-medium transition-all duration-300 ${
+                  loginType === "admin" 
+                    ? "bg-white text-purple-600 shadow-sm" 
+                    : "text-gray-600 hover:text-gray-800"
+                }`}
+                onClick={() => setLoginType("admin")}
+              >
+                Admin Login
+              </button>
+            </div>
           </MContainer>
 
           <MForm onSubmit={handleSubmit} variants={itemVariants}>
@@ -220,7 +254,11 @@ export default function Login() {
             <MButton
               type="submit"
               disabled={isLoading}
-              className="w-full py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden group disabled:opacity-50 disabled:cursor-not-allowed"
+              className={`w-full py-4 text-white rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden group disabled:opacity-50 disabled:cursor-not-allowed ${
+                loginType === "admin" 
+                  ? "bg-gradient-to-r from-purple-600 to-pink-600" 
+                  : "bg-gradient-to-r from-blue-600 to-purple-600"
+              }`}
               whileHover={!isLoading ? { scale: 1.02 } : {}}
               whileTap={!isLoading ? { scale: 0.98 } : {}}
             >
@@ -235,7 +273,7 @@ export default function Login() {
                     Signing In...
                   </>
                 ) : (
-                  "Sign In"
+                  `Sign In as ${loginType === "admin" ? "Admin" : "User"}`
                 )}
               </span>
               

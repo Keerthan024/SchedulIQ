@@ -20,7 +20,7 @@ router.post("/register", authLimiter, registerUser);
 router.post("/login", authLimiter, loginUser);
 
 // Protected routes (authentication required)
-router.use(protect); // All routes below this require authentication
+router.use(protect); 
 
 router.get("/me", getMe);
 router.put("/profile", updateProfile);

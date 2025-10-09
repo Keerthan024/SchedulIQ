@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from "../api/axios";
+import { authAPI } from "../api/axios"; // Changed import
 import { useNavigate, Link } from "react-router-dom";
 import { motion } from 'framer-motion';
 
@@ -10,7 +10,6 @@ const MInput = motion.input;
 const MButton = motion.button;
 const MCard = motion.div;
 const MText = motion.p;
-const MSelect = motion.select;
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -18,7 +17,6 @@ export default function Register() {
     email: "",
     password: "",
     confirmPassword: "",
-    role: "user",
     department: "",
     phone: ""
   });
@@ -67,7 +65,9 @@ export default function Register() {
     setIsLoading(true);
     try {
       const { confirmPassword, ...submitData } = formData;
-      const res = await axios.post("/auth/register", submitData);
+      
+      // Use authAPI instead of direct axios
+      const res = await authAPI.register(submitData);
       
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.user));
@@ -87,6 +87,7 @@ export default function Register() {
     }
   };
 
+  // ... rest of your component remains exactly the same
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -246,24 +247,6 @@ export default function Register() {
                   <span className="mr-1">⚠️</span> {errors.email}
                 </motion.p>
               )}
-            </MContainer>
-
-            {/* Role Selection */}
-            <MContainer variants={itemVariants} className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Role
-              </label>
-              <MSelect
-                name="role"
-                className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300 outline-none"
-                value={formData.role}
-                onChange={handleChange}
-                whileFocus="focus"
-                variants={inputVariants}
-              >
-                <option value="user">User</option>
-                <option value="admin">Administrator</option>
-              </MSelect>
             </MContainer>
 
             {/* Department Input */}
